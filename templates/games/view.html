@@ -1,0 +1,102 @@
+{% extends "../base.html" %}
+{% block title %}Game{% endblock %}
+{% block content %}
+<h1>Game: #{{ game_id }}</h1>
+{% if let Some(d) = data %}
+<dl>
+    <dt>ID:</dt>
+    <dd>{{d.game.id}}</dd>
+    <dt>Owner:</dt>
+    <dd><a href="/users/{{d.owner.id}}">{{d.owner.login()}}</a></dd>
+    <dt>World:</dt>
+    <dd>{{d.game.world_id}}</dd>
+    <dt>Track:</dt>
+    <dd>{{d.game.track_id}}</dd>
+    <dt>Laps:</dt>
+    <dd>{{d.game.laps}}</dd>
+    <dt>Seeds:</dt>
+    <dd>{{d.game.seeds}}</dd>
+    <dt>Duration:</dt>
+    <dd>{{d.game.duration}}</dd>
+    <dt>Is express:</dt>
+    <dd>{% if d.game.is_express %}
+        yes
+        {% else %}
+        no
+        {% endif %}
+    </dd>
+    <dt>Players:</dt>
+    <dd>{{players.len()}}/{{d.game.players_cnt}}
+        {% if !players.is_empty() %}
+            <ul>
+            {% for player in players %}
+                <li><a href="/users/{{player.id}}">{{player.login()}}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </dd>
+</dl>
+
+{% if cfg!(debug_assertions) %}
+<dl>
+    <dt>Gameinfo:</dt>
+    <dd><pre>{{ "{:#?}"|format(d.game) }}</pre></dd>
+    <dt>Players:</dt>
+    <dd><pre>{{ "{:#?}"|format(players) }}</pre></dd>
+    <dt>Steps:</dt>
+    <dd>
+        <table class="list">
+            <tr>
+                <th>player_number</th>
+                <th>step_number</th>
+                <th>is_finished</th>
+                <th>rank</th>
+                <th>move_time</th>
+                <th>move_steps</th>
+                <th>bottles_cnt</th>
+                <th>total_seeds_cnt</th>
+                <th>arcanes_cnt</th>
+                <th>destroys_cnt</th>
+                <th>user_seeds_cnt</th>
+            </tr>
+            {% for turns in steps %}
+                {% for turn in turns %}
+                <tr>
+                    <td>{{turn.player_number}}</td>
+                    <td>{{turn.step_number}}</td>
+                    <td>{{turn.is_finished}}</td>
+                    <td>{{turn.rank}}</td>
+                    <td>{{turn.move_time}}</td>
+                    <td>{{turn.move_steps}}</td>
+                    <td>{{turn.bottles_cnt}}</td>
+                    <td>{{turn.total_seeds_cnt}}</td>
+                    <td>{{turn.arcanes_cnt}}</td>
+                    <td>{{turn.destroys_cnt}}</td>
+                    <td>{{turn.user_seeds_cnt}}</td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+    </dd>
+</dl>
+{% endif %}
+
+{% if let Some(me) = app.me %}
+    {% if is_available_join %}
+        <form method="POST" action="/games/{{game_id}}/join">
+            <button>
+                Join
+                <input type="submit" style="display: none;" />
+            </button>
+        </form>
+    {% endif %}
+{% endif %}
+
+{% else %}
+    <div style="color: gray;"><i>No game</i></div>
+{% endif %}
+
+<div class="control">
+    <a href="/games">← Back</a>
+</div>
+{% endblock %}

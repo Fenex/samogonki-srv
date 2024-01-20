@@ -1,0 +1,26 @@
+{% extends "../base.html" %}
+{% block title %}User{% endblock %}
+{% block content %}
+<h1>User: {{ user.login() }}
+    {% if let Some(me) = app.me %}
+        {% if me.id == user.id %}
+            <font color=gray><i>it's you</i></font>
+        {% endif %}
+    {% endif %}
+</h1>
+
+<dl>
+    <dt>id:</dt>
+    <dd>{{ user.id }}</dd>
+    <dt>login:</dt>
+    <dd>{{ user.login() }}</dd>
+    <dt>steam_id:</dt>
+    <dd><a  target="_blank" class="steam-logo" href="https://steamcommunity.com/profiles/{{user.steam_id}}">{{ user.steam_id }}</a></dd>
+    <dt>joined:</dt>
+    <dd>{{ user.created_at }}</dd>
+</dl>
+
+<div class="control">
+    <a href="/users">← Back</a>
+</div>
+{% endblock %}

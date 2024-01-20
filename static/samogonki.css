@@ -1,0 +1,89 @@
+body {
+    color: gainsboro;
+    background-color: #170a1c;
+    margin: 0px;
+    padding: 0px;
+}
+
+header {
+    position: sticky;
+    right: 0px;
+    top: 0px;
+    background-color: #321860;
+    color: white;
+}
+
+header .title {
+    border-right: 1px dashed gray;
+}
+
+header > div {
+    display:inline-block;
+    padding: 10px;
+}
+
+header ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+header ul li{
+    display: inline;
+    margin-right: 10px;
+}
+
+.container {
+    padding: 10px;
+}
+
+.debug-banner {
+    background-color: red;
+    text-align: center;
+    color: black;
+}
+
+a {
+    color: #ffbf00;
+    padding: 3px;
+}
+
+dl {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 8px;
+}
+  
+dt {
+    grid-column-start: 1;
+    font-weight: bold;
+}
+  
+dd {
+    grid-column-start: 2;
+}
+
+.control {
+    margin-top: 10px;
+}
+
+.gamelist td, .gamelist th {
+    padding: 4px 12px;
+}
+
+header .auth {
+    float: right;
+}
+
+a.steam-logo {
+    padding-left: 30px;
+    background: transparent url('/static/steam-logo2.svg') no-repeat 0% 0%;
+}
+
+table.list tr td, table.list tr th {
+    border: 0px;
+    border-bottom: 1px solid white;
+    padding: 10px;
+    margin: 0px;
+}
+
+

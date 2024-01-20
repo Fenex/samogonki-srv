@@ -1,0 +1,27 @@
+[package]
+name = "entity"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "entity"
+path = "src/lib.rs"
+
+[dependencies]
+async-trait = "0.1.77"
+chrono = "^0.4"
+log = "0.4.17"
+rand = "0.8.5"
+sea-orm = { version = "^0.12.0", features = [
+    "sqlx-sqlite",
+    "runtime-tokio-native-tls",
+    "macros",
+    "chrono",
+    "debug-print",
+    "serde_json",
+] }
+serde = { version = "^1", features = ["derive"] }
+serde_json = "1.0.110"
+
+[features]

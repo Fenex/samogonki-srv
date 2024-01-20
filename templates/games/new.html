@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}New game{% endblock %}
+{% block content %}
+{% if app.me.is_some() %}
+<h1>
+    New game:
+</h1>
+<div style="padding-left: 25px;">
+    <form method="POST" action="/games/new">
+        <dl>
+            <dt>Track:</dt>
+            <dd>
+                <input type="number" min="0" name="track_id" value="0" />
+            </dd>
+            <dt>Game will over:</dt>
+            <dd>
+                <select name="game_type" value="Winner">
+                    <option value="Winner">when first player has finished</option>
+                    <option value="All">when all players have finished</option>
+                </select>
+            </dd>
+            <dt>Laps:</dt>
+            <dd><input type="number" name="laps" min="1" value="1" /></dd>
+            <dt>Seeds:</dt>
+            <dd><input type="number" name="seeds" min="1" value="1" /></dd>
+            <dt>Duration:</dt>
+            <dd><input type="number" name="duration" min="100" value="100" /></dd>
+            <dt>Is express:</dt>
+            <dd><input type="checkbox" name="is_express" value="on" checked disabled /></dd>
+            <dt>Players:</dt>
+            <dd>
+                <input type="number" name="players_cnt" min="2" max="5" value="2" />
+            </dd>
+            <button>
+                Go!
+                <input type="submit" style="display: none;" />
+            </button>
+        </dl>
+    </form>
+</div>
+{% else %}
+    <div style="color: gray;">You need to <a href="/auth/login">log in</a> before you can create games</div>
+{% endif %}
+<font color="red">
+    <pre>{{ "{:#?}"|format(error) }}</pre>
+</font>
+<div class="control">
+    <a href="/games">← Back</a>
+</div>
+{% endblock %}

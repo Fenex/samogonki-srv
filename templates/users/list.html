@@ -1,0 +1,33 @@
+{% extends "../base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<h1>Users:</h1>
+{% if users.is_empty() %}
+    <div style="color: gray;"><i>Empty.</i></div>
+{% else %}
+<table class="list">
+    <tr><th></th><th>id</th><th>login</th><th>steam</th><th>joined</th></tr>
+    {% for user in users %}
+        <tr>
+            <td>
+                {% if let Some(me) = app.me %}
+                    {% if me.id == user.id %}
+                        <i style="color: gray;">It's you</i>
+                    {% endif %}
+                {% else %}
+                {% endif %}
+            </td>
+            <td>{{user.id}}</td>
+            <td><a href="/users/{{user.id}}">{{user.login()}}</a></td>
+            <td style="padding: 0px; text-align: center;"><a target="_blank" href="https://steamcommunity.com/profiles/{{user.steam_id}}">
+                <img src="/static/steam-logo2.svg" style="height: 25px;" />
+            </a></td>
+            <td>{{user.created_at}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<div class="control">
+    <a href="/">← Back</a>
+</div>
+{% endblock %}

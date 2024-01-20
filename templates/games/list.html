@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Gamelist{% endblock %}
+{% block content %}
+<h1>Gamelist:</h1>
+{% if games.is_empty() %}
+    <div style="color: gray;"><i>Empty.</i></div>
+{% endif %}
+
+
+{% if !games.is_empty() %}
+<div class="control">
+    <a href="/">← Back</a>
+    {% if app.me.is_some() %}
+        <a href="/games/new">New game</a>
+    {% endif %}
+</div>
+
+<table class="list">
+    <tr><th>id</th><th>created_at</th><th>owner</th><th></th><th>players</th><th></th></tr>
+    {% for g in games %}
+        <tr>
+            <td><a href="/games/{{g.id}}">{{g.id}}</a></td>
+            <td>{{g.created_at}}</td>
+            <td>
+                <a href="/users/{{g.owner_id}}">
+                    {% if let Some(login) = g.login %}
+                        {{login}}
+                    {% else %}
+                        {{"ID: {}"|format(g.steam_id)}}
+                    {% endif %}
+                </a>
+            </td>
+            <td style="padding: 0px; text-align: center;"><a target="_blank" href="https://steamcommunity.com/profiles/{{g.steam_id}}">
+                <img src="/static/steam-logo2.svg" style="height: 25px;" />
+            </a></td>
+            <td></td>
+            <td>{{g.players_registered}} / {{g.players_cnt}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<div class="control">
+    <a href="/">← Back</a>
+    {% if app.me.is_some() %}
+        <a href="/games/new">New game</a>
+    {% endif %}
+</div>
+{% endblock %}
