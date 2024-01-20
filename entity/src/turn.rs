@@ -96,20 +96,3 @@ impl ActiveModelBehavior for ActiveModel {
         Ok(self)
     }
 }
-
-#[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize, FromJsonQueryResult)]
-pub struct Sent(pub Vec<u32>);
-
-impl Deref for Sent {
-    type Target = Vec<u32>;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-impl DerefMut for Sent {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
-    }
-}
